@@ -66,6 +66,7 @@ services:
 
 修改MihoyoBBSTools中的captcha.py的内容为该项目中的[captcha.py.bak](https://raw.githubusercontent.com/kafuneri/captcha-tools/refs/heads/main/captcha.py.bak)
 
+**该Fork中的model文件来自于原作者，仓库地址：https://github.com/luguoyixiazi/model_save**
 
 以下为原项目说明
 ---------
