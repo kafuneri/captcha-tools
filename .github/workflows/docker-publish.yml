@@ -3,7 +3,25 @@ name: Publish Docker Image
 on:
   push:
     branches:
-      - main # 若你的默认分支名为 master，请在此处修改
+      - main # 默认分支名
+    paths-ignore:
+      # 1. 忽略纯文本与本地编排配置
+      - 'README.md'
+      - 'LICENSE'
+      - 'docker-compose.yaml'
+      
+      # 2. 忽略训练脚本与不参与构建的训练依赖
+      - 'train.py'
+      - 'train_paddle.py'
+      - 'convert.py'
+      - 'requirements.txt'
+      - 'PP-HGNetV2-B4.yaml'
+      
+      # 3. 忽略本地产生的缓存、日志及无用数据文件
+      - 'mousepath.json'
+      - 'img_saved/**'
+      - 'img_2_val/**'
+      - 'logs/**'
 
 jobs:
   build-and-push:

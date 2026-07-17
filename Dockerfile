@@ -23,15 +23,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# 精确复制 Python 依赖
+# 复制 Python 依赖
 COPY --from=builder /root/.local/lib/python3.10/site-packages /root/.local/lib/python3.10/site-packages
 COPY --from=builder /root/.local/bin /root/.local/bin
 COPY . .
 
-# 环境变量与清理
+# 设置环境变量
+# 开启 pdl(九宫格) 和 dfine(图标点选)，强制关闭 multi(多模态流水线)
 ENV PATH=/root/.local/bin:$PATH \
     PIP_BREAK_SYSTEM_PACKAGES=1 \
-    PYTHONDONTWRITEBYTECODE=1
+    PYTHONDONTWRITEBYTECODE=1 \
+    use_pdl=1 \
+    use_dfine=1 \
+    use_multi=0
 
 # 清理 Python 缓存和临时文件
 RUN find /app -name "*.pyc" -delete \

@@ -1,4 +1,31 @@
-__pycache__
+# 1. 忽略版本控制与自动化配置
 .git
-img_saved
-img_2_val
+.github
+.dockerignore
+
+# 2. 忽略文档与部署配置
+README.md
+LICENSE
+Dockerfile
+docker-compose.yaml
+
+# 3. 忽略训练脚本与训练依赖
+train.py
+train_paddle.py
+convert.py
+requirements.txt
+PP-HGNetV2-B4.yaml
+
+# 4. 忽略本地运行产生的缓存与测试文件
+__pycache__
+*.pyc
+img_saved/
+img_2_val/
+logs/
+mousepath.json
+
+# 5. 过滤无用模型
+# 仅保留米游社必需的 PP-HGNetV2-B4.onnx(九宫格) 和 d-fine-n.onnx(图标点选)
+model/dinov3-small.onnx
+model/yolo11n.onnx
+model/atten.onnx
