@@ -1,0 +1,7 @@
+services:
+  captcha-tools:
+    build: .  # 指定 Dockerfile 所在目录
+    image: captcha-tools:latest
+    container_name: captcha-tools
+    network_mode: host  # 设置为 host 网络模式
+    restart: always

@@ -321,5 +321,7 @@ def set_log_level(level: str = Query(...)):
     return JSONResponse(content = f"Log level successfully set to {level_str}")
 
 if __name__ == "__main__":
-    uvicorn.run(app,port=PORT,log_config=LOGGING_CONFIG)
+    import uvicorn
+    # 添加 host="0.0.0.0" 参数以允许宿主机及局域网设备访问
+    uvicorn.run(app, host="0.0.0.0", port=PORT, log_config=LOGGING_CONFIG)
     
