@@ -1,3 +1,75 @@
+
+# 关于
+代码fork自[luguoyixiazi/test_nine](https://github.com/luguoyixiazi/test_nine)，在此仅添加docker构建配置以方便使用，仅供个人测试使用，不保证可用性
+# 食用方法
+### 1.安装docker
+教程很多，不再赘述，推荐使用
+```bash
+bash <(curl -sSL https://linuxmirrors.cn/docker.sh)
+```
+### 2.构建镜像(可选)
+```bash
+git clone https://github.com/kafuneri/captcha-tools.git 
+cd captcha-tools
+docker compose build --no-cache && docker compose up -d #构建并运行镜像
+```
+> PS：国内服务器构建镜像时请注意配置代理或换源
+### 3.使用构建好的镜像
+使用`docker-compose.yaml`：
+```yaml
+services:
+  captcha-tools:
+    image: kafuneri/captcha-tools:latest 
+    container_name: captcha-tools
+    network_mode: host  # 设置为 host 网络模式
+    restart: always
+```
+
+### 4.对接[MihoyoBBSTools](https://github.com/Womsxd/MihoyoBBSTools)
+修改MihoyoBBSTools中的captcha.py为该项目中的[captcha.py](https://raw.githubusercontent.com/kafuneri/captcha-tools/refs/heads/main/captcha.py)
+
+
+--------
+## 旧版镜像兼容说明
+
+该Fork同步了上游更新，若您仅需要处理基础的九宫格验证码，且希望维持旧版 API 的调用习惯，请使用旧版镜像。该系列镜像已验证具备长期的运行稳定性。  
+
+镜像地址：[kafuneri/captcha-tools](https://hub.docker.com/r/kafuneri/captcha-tools/tags)
+
+### 1. 版本差异矩阵对比
+
+| 镜像分类 | 镜像标签 (Tag) | 目标支持架构 (Arch) | 核心请求端点 | 支持的验证模式 |
+| --- | --- | --- | --- | --- |
+| **最新智能网关版** | `latest` | 自动适配双架构 | `/pass_uni` | 九宫格、图标点选等 |
+| **经典纯九宫格版** | `amd64` | 仅限 **x86_64** | `/pass_nine` | 仅九宫格 |
+| **经典纯九宫格版** | `arm64` | 仅限 **ARM64** | `/pass_nine` | 仅九宫格 |
+
+### 2. 旧版容器编排配置
+
+部署旧版时，您必须在编排配置中精准指定与宿主机硬件匹配的架构标签，不可使用自动化标签。
+
+```yaml
+services:
+  captcha-tools:
+    # x86_64 处理器设备请使用 amd64 标签
+    # ARM 架构设备请更改为 arm64 标签
+    image: kafuneri/captcha-tools:amd64 
+    container_name: captcha-tools
+    network_mode: host 
+    restart: always
+
+```
+
+### 3. 旧版客户端对接代码 (captcha.py)
+
+调用经典版镜像时，禁止向新型多模态网关发起请求。您必须将请求端点显式回退至 **`/pass_nine`** 路由，且在 **httpx** 的请求参数中强制声明 **`use_v3_model`** 的布尔值为 `True`。
+
+修改MihoyoBBSTools中的captcha.py的内容为该项目中的[captcha.py.bak](https://raw.githubusercontent.com/kafuneri/captcha-tools/refs/heads/main/captcha.py.bak)
+
+
+以下为原项目说明
+---------
+
 # 九宫格+点选测试代码
 
 ## **本项目仅供学习交流使用，请勿用于商业用途，否则后果自负。**
@@ -136,6 +208,3 @@ def game_captcha(gt: str, challenge: str):
 #### --宣传--
 
 欢迎大家支持我的其他项目(搭配使用)喵~~~~~~~~
-
-
-
