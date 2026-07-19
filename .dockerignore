@@ -22,7 +22,6 @@ __pycache__
 img_saved/
 img_2_val/
 logs/
-mousepath.json
 
 # 5. 过滤无用模型
 # 仅保留米游社必需的 PP-HGNetV2-B4.onnx(九宫格) 和 d-fine-n.onnx(图标点选)
